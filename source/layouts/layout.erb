@@ -27,6 +27,7 @@ under the License.
     </style>
     <%= stylesheet_link_tag :screen, media: :screen %>
     <%= stylesheet_link_tag :print, media: :print %>
+    <link rel="icon" type="image/png" href="apple-touch-icon-57-precomposed.png">
     <% if current_page.data.search %>
       <%= javascript_include_tag  "all" %>
     <% else %>
@@ -42,7 +43,9 @@ under the License.
       </span>
     </a>
     <div class="tocify-wrapper">
-      <%= image_tag "logo.png" %>
+      <p style="text-align: center;">
+        <%= image_tag "logo.png" %>
+      </p>
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
