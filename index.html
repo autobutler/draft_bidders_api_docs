@@ -130,8 +130,8 @@ offers on Autobutler jobs.</p>
 <p>To authorize, use this code:</p>
 </blockquote>
 <pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: supersecretapikey"</span>
+curl -X <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
+     -H <span class="s2">"Authorization: supersecretapikey"</span>
 </code></pre>
 
 <blockquote>
@@ -150,9 +150,9 @@ You must replace <code>supersecretapikey</code> with your personal API key.
 
           <h1 id="jobs">Jobs</h1>
 
-<h2 id="get-all-jobs">Get All Jobs</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs"</span>
-  -H <span class="s2">"Authorization: supersecretapikey"</span>
+<h2 id="get-all-jobs">Get all Jobs</h2>
+<pre class="highlight shell"><code>curl -X <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs?page=1&amp;includeUnverified=true"</span> <span class="se">\</span>
+     -H <span class="s2">"Authorization: supersecretapikey"</span>
 </code></pre>
 
 <blockquote>
@@ -167,7 +167,8 @@ You must replace <code>supersecretapikey</code> with your personal API key.
       </span><span class="nt">"referenceNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab530218"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Brakes"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"car"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jaguar XF - 2013"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BL1 6HY"</span><span class="w">
+      </span><span class="nt">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BL1 6HY"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -178,7 +179,8 @@ You must replace <code>supersecretapikey</code> with your personal API key.
       </span><span class="nt">"referenceNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab530964"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bodywork (dents etc.)"</span><span class="p">,</span><span class="w">
       </span><span class="nt">"car"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Honda CR-V - 2013"</span><span class="p">,</span><span class="w">
-      </span><span class="nt">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TW13 4GA"</span><span class="w">
+      </span><span class="nt">"zip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TW13 4GA"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -196,19 +198,27 @@ You must replace <code>supersecretapikey</code> with your personal API key.
 <tr>
 <th>Parameter</th>
 <th>Default</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>page</td>
-<td>1</td>
+<td><code class="prettyprint">1</code></td>
+<td>no</td>
 <td>The number for the page to return</td>
+</tr>
+<tr>
+<td>includeUnverified</td>
+<td><code class="prettyprint">false</code></td>
+<td>no</td>
+<td>If set to <code class="prettyprint">true</code>, the results will include unverified jobs</td>
 </tr>
 </tbody></table>
 
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight shell"><code>curl <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs/530785"</span>
-  -H <span class="s2">"Authorization: supersecretapikey"</span>
+<h2 id="get-a-specific-job">Get a specific Job</h2>
+<pre class="highlight shell"><code>curl -X <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs/530785"</span> <span class="se">\</span>
+     -H <span class="s2">"Authorization: supersecretapikey"</span>
 </code></pre>
 
 <blockquote>
@@ -275,12 +285,69 @@ You must replace <code>supersecretapikey</code> with your personal API key.
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Default</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>ID</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
 <td>The ID of the job to retrieve</td>
+</tr>
+</tbody></table>
+
+<h3 id="potential-errors">Potential Errors</h3>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; The specified job id could not be found or is unavailable for draft bidding</td>
+</tr>
+</tbody></table>
+
+<h2 id="hide-a-specific-job">Hide a specific Job</h2>
+<pre class="highlight shell"><code>curl -X <span class="s2">"DELETE"</span> <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs/530785"</span> <span class="se">\</span>
+     -H <span class="s2">"Authorization: supersecretapikey"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint hides a specific job so that it will no longer be included in
+the list of all jobs. The job will still be available in all other endpoints as
+long as it doesn&rsquo;t have a draft offer.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">DELETE https://www.autobutler.dk/api/v2/draft_bidders/jobs/&lt;ID&gt;</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The ID of the job to hide</td>
 </tr>
 </tbody></table>
 
