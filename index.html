@@ -365,6 +365,205 @@ long as it doesn&rsquo;t have a draft offer.</p>
 </tr>
 </tbody></table>
 
+          <h1 id="draft-offers">Draft Offers</h1>
+
+<h2 id="create-a-draft-offer">Create a Draft Offer</h2>
+<pre class="highlight shell"><code>curl -X <span class="s2">"POST"</span> <span class="s2">"https://www.autobutler.dk/api/v2/draft_bidders/jobs/531512/draft_offer"</span> <span class="se">\</span>
+     -H <span class="s2">"Authorization: supersecretapikey"</span> <span class="se">\</span>
+     -H <span class="s2">"Content-Type: application/json; charset=utf-8"</span> <span class="se">\</span>
+     -d <span class="s2">"{</span><span class="se">\"</span><span class="s2">qualityOfParts</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">OEM</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">guaranteeOnParts</span><span class="se">\"</span><span class="s2">:12,</span><span class="se">\"</span><span class="s2">guaranteeOnWork</span><span class="se">\"</span><span class="s2">:24,</span><span class="se">\"</span><span class="s2">bodyText</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">foo bar</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">lineItems</span><span class="se">\"</span><span class="s2">:[{</span><span class="se">\"</span><span class="s2">description</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Brake Fluid</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">quantity</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">unit</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">liter</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">netPrice</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">100</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">grossPrice</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">120</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">part_people</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">articleNumber</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">123A-BCD-4EF</span><span class="se">\"</span><span class="s2">}]}"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>This endpoint creates a draft offer for the job with the specified id.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://www.autobutler.dk/api/v2/draft_bidders/jobs/&lt;JOB_ID&gt;/draft_offer</code></p>
+
+<h3 id="url-parameters">URL Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>JOB_ID</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The ID of the job to create a draft offer for</td>
+</tr>
+</tbody></table>
+
+<h3 id="body-parameters">Body Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>qualityOfParts</td>
+<td>string</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The quality of the parts included in the offer.<br><strong><em>See below for accepted values</em></strong></td>
+</tr>
+<tr>
+<td>guaranteeOnParts</td>
+<td>integer</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The warranty in months on the parts included in the offer.<br><strong><em>See below for accepted values</em></strong></td>
+</tr>
+<tr>
+<td>guaranteeOnWork</td>
+<td>integer</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The warranty in months on the work included in the offer.<br><strong><em>See below for accepted values</em></strong></td>
+</tr>
+<tr>
+<td>bodyText</td>
+<td>string</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>A message for the car owner describing the offer</td>
+</tr>
+<tr>
+<td>lineItems</td>
+<td>array(object)</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>A list of line items included in the offer.<br><strong><em>See below for structure</em></strong></td>
+</tr>
+</tbody></table>
+
+<h4 id="accepted-qualityofparts-values">Accepted <code class="prettyprint">qualityOfParts</code> values</h4>
+
+<ul>
+<li><code class="prettyprint">&quot;NONE&quot;</code></li>
+<li><code class="prettyprint">&quot;ORIGINAL&quot;</code></li>
+<li><code class="prettyprint">&quot;OEM&quot;</code></li>
+<li><code class="prettyprint">&quot;ALTERNATIVE&quot;</code></li>
+<li><code class="prettyprint">&quot;USED&quot;</code></li>
+<li><code class="prettyprint">&quot;OTHER&quot;</code></li>
+</ul>
+
+<h4 id="accepted-guaranteeonparts-and-guaranteeonwork-values">Accepted <code class="prettyprint">guaranteeOnParts</code> and <code class="prettyprint">guaranteeOnWork</code> values</h4>
+
+<ul>
+<li><code class="prettyprint">0</code>: No warranty</li>
+<li><code class="prettyprint">6</code></li>
+<li><code class="prettyprint">12</code></li>
+<li><code class="prettyprint">18</code></li>
+<li><code class="prettyprint">24</code></li>
+<li><code class="prettyprint">30</code></li>
+<li><code class="prettyprint">36</code></li>
+<li><code class="prettyprint">48</code></li>
+<li><code class="prettyprint">60</code></li>
+<li><code class="prettyprint">72</code></li>
+<li><code class="prettyprint">9999</code>: Lifetime warranty</li>
+</ul>
+
+<h4 id="lineitems-structure"><code class="prettyprint">lineItems</code> structure</h4>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>description</td>
+<td>string</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>A description of the line item</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>float</td>
+<td>1.0</td>
+<td>no</td>
+<td>The number of this items included in the offer</td>
+</tr>
+<tr>
+<td>unit</td>
+<td>string</td>
+<td><code class="prettyprint">&quot;pcs&quot;</code></td>
+<td>no</td>
+<td>An identifier that determines the type of individual units of this line item.<br><strong><em>See below for accepted values</em></strong></td>
+</tr>
+<tr>
+<td>netPrice</td>
+<td>float</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The net price of the line item per unit. Ie. what the workshop has to pay for a single unit of this item</td>
+</tr>
+<tr>
+<td>grossPrice</td>
+<td>float</td>
+<td><code class="prettyprint">null</code></td>
+<td>yes</td>
+<td>The gross price of the line item per unit. Ie. what the car owner has to pay for a single unit of this item</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td><code class="prettyprint">null</code></td>
+<td>no</td>
+<td>The type of line item.<br><strong><em>See below for accepted values</em></strong></td>
+</tr>
+<tr>
+<td>articleNumber</td>
+<td>string</td>
+<td><code class="prettyprint">null</code></td>
+<td>no</td>
+<td>The article number for the part in your system</td>
+</tr>
+</tbody></table>
+
+<h5 id="accepted-unit-values">Accepted <code class="prettyprint">unit</code> values</h5>
+
+<ul>
+<li><code class="prettyprint">&quot;pcs&quot;</code>: Pieces</li>
+<li><code class="prettyprint">&quot;liter&quot;</code>: Liters</li>
+<li><code class="prettyprint">&quot;gram&quot;</code>: Grams</li>
+<li><code class="prettyprint">&quot;kg&quot;</code>: Kilograms</li>
+<li><code class="prettyprint">&quot;meter&quot;</code>: Meters</li>
+<li><code class="prettyprint">&quot;set&quot;</code>: Sets</li>
+<li><code class="prettyprint">&quot;hours&quot;</code>: Hours - <strong>Must be used for work-related line items</strong></li>
+</ul>
+
+<h5 id="accepted-type-values">Accepted <code class="prettyprint">type</code> values</h5>
+
+<ul>
+<li><code class="prettyprint">null</code>: Generic line item with no 3rd party integrations</li>
+<li><code class="prettyprint">&quot;meca&quot;</code>: Line item with Meca spare part catalog integration</li>
+<li><code class="prettyprint">&quot;part_people&quot;</code>: Line item with Part People catalog integration</li>
+<li><code class="prettyprint">&quot;twm&quot;</code>: Line item with TWM crm system integration</li>
+</ul>
+
           <h1 id="errors">Errors</h1>
 
 <p>Apart from the possible error codes listed for the individual endpoints, the API
